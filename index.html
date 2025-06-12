@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stundenerfassung</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>Stundenerfassung</h1>
+            <p class="app-subtitle">Erfassen Sie Ihre Arbeitszeiten für die Woche</p>
+        </header>
+
+        <main class="main-content">
+            <form id="timeTrackingForm" class="time-form">
+                <!-- Employee and General Information -->
+                <div class="card">
+                    <div class="card__header">
+                        <h2>Mitarbeiter-Informationen</h2>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label for="employeeName" class="form-label">Name des Mitarbeiters *</label>
+                            <input type="text" id="employeeName" class="form-control" required>
+                        </div>
+                        
+                        <div class="flex gap-16">
+                            <div class="form-group flex-1">
+                                <label for="calendarWeek" class="form-label">Kalenderwoche *</label>
+                                <input type="text" id="calendarWeek" class="form-control" placeholder="z.B. KW 24/2025" required>
+                            </div>
+                            
+                            <div class="form-group flex-1">
+                                <label for="costCenter" class="form-label">Kostenstelle *</label>
+                                <input type="text" id="costCenter" class="form-control" placeholder="z.B. 1001" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Time Tracking -->
+                <div class="card">
+                    <div class="card__header">
+                        <h2>Tägliche Zeiterfassung</h2>
+                    </div>
+                    <div class="card__body">
+                        <div class="days-container">
+                            <div class="day-entry" data-day="montag">
+                                <h3>Montag</h3>
+                                <div class="time-inputs">
+                                    <div class="form-group">
+                                        <label class="form-label">Startzeit</label>
+                                        <input type="time" class="form-control start-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Endzeit</label>
+                                        <input type="time" class="form-control end-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pause (Min.)</label>
+                                        <input type="number" class="form-control break-duration" value="30" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Arbeitszeit</label>
+                                        <input type="text" class="form-control daily-hours" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="day-entry" data-day="dienstag">
+                                <h3>Dienstag</h3>
+                                <div class="time-inputs">
+                                    <div class="form-group">
+                                        <label class="form-label">Startzeit</label>
+                                        <input type="time" class="form-control start-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Endzeit</label>
+                                        <input type="time" class="form-control end-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pause (Min.)</label>
+                                        <input type="number" class="form-control break-duration" value="30" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Arbeitszeit</label>
+                                        <input type="text" class="form-control daily-hours" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="day-entry" data-day="mittwoch">
+                                <h3>Mittwoch</h3>
+                                <div class="time-inputs">
+                                    <div class="form-group">
+                                        <label class="form-label">Startzeit</label>
+                                        <input type="time" class="form-control start-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Endzeit</label>
+                                        <input type="time" class="form-control end-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pause (Min.)</label>
+                                        <input type="number" class="form-control break-duration" value="30" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Arbeitszeit</label>
+                                        <input type="text" class="form-control daily-hours" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="day-entry" data-day="donnerstag">
+                                <h3>Donnerstag</h3>
+                                <div class="time-inputs">
+                                    <div class="form-group">
+                                        <label class="form-label">Startzeit</label>
+                                        <input type="time" class="form-control start-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Endzeit</label>
+                                        <input type="time" class="form-control end-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pause (Min.)</label>
+                                        <input type="number" class="form-control break-duration" value="30" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Arbeitszeit</label>
+                                        <input type="text" class="form-control daily-hours" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="day-entry" data-day="freitag">
+                                <h3>Freitag</h3>
+                                <div class="time-inputs">
+                                    <div class="form-group">
+                                        <label class="form-label">Startzeit</label>
+                                        <input type="time" class="form-control start-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Endzeit</label>
+                                        <input type="time" class="form-control end-time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Pause (Min.)</label>
+                                        <input type="number" class="form-control break-duration" value="30" min="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Arbeitszeit</label>
+                                        <input type="text" class="form-control daily-hours" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="card">
+                    <div class="card__header">
+                        <h2>Zusammenfassung</h2>
+                    </div>
+                    <div class="card__body">
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <span class="summary-label">Gesamtstunden:</span>
+                                <span id="totalHours" class="summary-value">0:00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Sollstunden (40h):</span>
+                                <span class="summary-value">40:00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Überstunden:</span>
+                                <span id="overtimeHours" class="summary-value">0:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button type="button" id="resetBtn" class="btn btn--secondary">
+                        Zurücksetzen
+                    </button>
+                    <button type="button" id="exportPdfBtn" class="btn btn--primary">
+                        PDF exportieren
+                    </button>
+                </div>
+            </form>
+        </main>
+
+        <div id="errorMessage" class="error-message hidden"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
