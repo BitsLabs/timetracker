@@ -937,7 +937,7 @@ select.form-control {
 
 /* Footer styling */
 .app-footer {
-  background-color: #f0f0f0;
+  background-color: var(--color-background);
   padding: var(--space-12) 0;
   text-align: center;
   font-size: var(--font-size-sm);
