@@ -140,7 +140,7 @@ class TimeTracker {
 
     validateForm() {
         let isValid = true;
-        const requiredFields = ['employeeName', 'calendarWeek', 'costCenter'];
+        const requiredFields = ['employeeName', 'calendarWeek', 'employeeNumber'];
         
         // Check required fields
         requiredFields.forEach(fieldId => {
@@ -226,7 +226,7 @@ class TimeTracker {
             // Get form data
             const employeeName = document.getElementById('employeeName').value;
             const calendarWeek = document.getElementById('calendarWeek').value;
-            const costCenter = document.getElementById('costCenter').value;
+            const employeeNumber = document.getElementById('employeeNumber').value;
             const currentDate = new Date().toLocaleDateString('de-DE');
 
             // PDF Header
@@ -247,7 +247,7 @@ class TimeTracker {
             doc.setFont(undefined, 'normal');
             doc.text(`Name: ${employeeName}`, 20, 60);
             doc.text(`Kalenderwoche: ${calendarWeek}`, 20, 70);
-            doc.text(`Kostenstelle: ${costCenter}`, 20, 80);
+            doc.text(`Personalnummer: ${employeeNumber}`, 20, 80);
 
             // Table Header
             doc.setFontSize(14);
@@ -262,10 +262,12 @@ class TimeTracker {
                 const startTime = dayEntry.querySelector('.start-time').value || '-';
                 const endTime = dayEntry.querySelector('.end-time').value || '-';
                 const breakDuration = dayEntry.querySelector('.break-duration').value || '0';
+                const costCenter = dayEntry.querySelector('.daily-cost-center').value || '-';
                 const dailyHours = dayEntry.querySelector('.daily-hours').value || '-';
-                
+
                 tableData.push([
                     days[index],
+                    costCenter,
                     startTime,
                     endTime,
                     `${breakDuration} Min`,
@@ -275,8 +277,8 @@ class TimeTracker {
 
             // Draw table
             let yPos = 110;
-            const colWidths = [30, 25, 25, 25, 25];
-            const headers = ['Tag', 'Start', 'Ende', 'Pause', 'Arbeitszeit'];
+            const colWidths = [25, 25, 25, 25, 25, 25];
+            const headers = ['Tag', 'Kostenstelle', 'Start', 'Ende', 'Pause', 'Arbeitszeit'];
 
             // Table headers
             doc.setFontSize(10);
