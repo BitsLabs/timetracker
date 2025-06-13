@@ -934,3 +934,12 @@ select.form-control {
 .validation-message {
   display: none;
 }
+
+/* Footer styling */
+.app-footer {
+  background-color: #f0f0f0;
+  padding: var(--space-12) 0;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
